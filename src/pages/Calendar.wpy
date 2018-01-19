@@ -1,0 +1,381 @@
+<style>
+
+  /*view,text{*/
+    /*background-color: black;*/
+  /*}*/
+
+
+  .container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .header{
+    width: 100%;
+    height: 44px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: white;
+  }
+
+  .headertext{
+    color: black;
+    font-size: 16px;
+  }
+
+  .line{
+    background-color: lightgray;
+    width: 100%;
+    height: 1px;
+  }
+
+  .calendar{
+    width: 100%;
+  }
+
+  .weekcontainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    height: 44px;
+  }
+
+  .weekitem{
+    flex: 1;
+    height: 44px;
+    box-sizing: border-box;
+    border: 1px solid white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .dayrowcontainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+
+  .dayitem{
+    flex: 1;
+    /*height: 44px;*/
+    box-sizing: border-box;
+    background-color: white;
+    border: 1px solid yellow;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: #000;
+  }
+
+  .dayitem-select{
+    flex: 1;
+    /*height: 44px;*/
+    box-sizing: border-box;
+    background-color: red;
+    border: 1px solid yellow;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+  }
+
+  .newday{
+    height: 22px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .oldday{
+    height: 22px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .customday{
+    /*height: 22px;*/
+    width: 100%;
+  }
+
+  .dairycontainer{
+    background-color: peachpuff;
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+</style>
+
+<template>
+  <view class="container">
+
+    <view class="line"></view>
+
+    <view class="header">
+      <button bindtap="lastMonth" type="default">last</button>
+      <text class="headertext">{{headerText}}</text>
+      <button bindtap="nextMonth" type="default">next</button>
+    </view>
+
+    <view class="line"></view>
+
+    <view class="calendar">
+      <view class="weekcontainer">
+        <block wx:for="{{weeks}}" wx:key="*this">
+          <view class="weekitem" >{{item}} </view>
+        </block>
+      </view>
+
+      <view>
+
+          <!--<view class="dayrowcontainer" wx:for="{{myMonDays.rowNumber}}" wx:key="*this" wx:for-index="rowindex">-->
+            <!--<view class="dayitem" wx:for="{{myMonDays.columnNumber}}" wx:key="*this" wx:for-index="itemindex">-->
+              <!--<view class="newday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday}}</view>-->
+              <!--<view class="oldday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].oldday}}</view>-->
+              <!--<view class="customday" wx:for="{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].customMsg}}">{{item}}</view>-->
+            <!--</view>-->
+          <!--</view>-->
+
+
+        <block wx:for="{{myMonDays.rowNumber}}" wx:key="*this" wx:for-index="rowindex">
+          <view class="dayrowcontainer">
+
+            <block wx:for="{{myMonDays.columnNumber}}" wx:key="*this" wx:for-index="itemindex">
+
+              <block wx:if="{{ !((selectDateObj > nowDateObj) || (selectDateObj < nowDateObj)) && nowDayNumber == myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday }}">
+                <view class="dayitem-select">
+                  <view class="newday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday}}</view>
+                  <view class="oldday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].oldday}}</view>
+                  <block wx:for="{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].customMsg}}">
+                    <view class="customday">{{item}}</view>
+                  </block>
+                </view>
+              </block>
+
+              <block wx:else>
+                <view class="dayitem">
+                  <view class="newday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday}}</view>
+                  <view class="oldday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].oldday}}</view>
+                  <block wx:for="{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].customMsg}}">
+                    <view class="customday">{{item}}</view>
+                  </block>
+                </view>
+              </block>
+
+            </block>
+
+          </view>
+        </block>
+      </view>
+    </view>
+
+
+    <view class="line"></view>
+
+    <view class="dairycontainer" bindtap="clickToEditDiary"></view>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class FQcalendar extends wepy.page {
+    data = {
+      headerText: '',
+      weeks: ['一', '二', '三', '四', '五', '六', '日'],
+      myMonDays: {
+        rowNumber: [],
+        columnNumber: [],
+        days: []
+      },
+      selectDateObj: null,
+      nowDateObj: null,
+      nowDayNumber:null
+    }
+
+    methods = {
+      lastMonth() {
+        console.log('切换到上一个月')
+        this.__exchangeMonth('left')
+      },
+      nextMonth() {
+        console.log('切换到下一个月')
+        this.__exchangeMonth('right')
+      },
+      clickToEditDiary() {
+        console.log('点击编辑日记')
+        wx.navigateTo({
+          url: '../pages/EditDiary'
+        })
+      }
+    }
+
+    onLoad() {
+      // this.__getdays()
+      this.__start()
+    }
+
+    __start() {
+      /* 初始化和保存今天的时间 */
+      let nowDate = this.__getNowDateObj()
+      this.nowDateObj = nowDate
+      this.nowDayNumber = this.nowDateObj.getDate()
+      console.log('今天的日期是 ==> ' + this.nowDayNumber)
+      this.selectDateObj = nowDate
+
+      this.__todo(this.selectDateObj)
+    }
+
+    __getNowDateObj() {
+      let dateObj = this.selectDateObj
+      if (dateObj) {
+        return dateObj
+      } else {
+        let tmp = new Date()
+        return this.__getFormateDateObj(tmp.getFullYear(), tmp.getMonth(), tmp.getDate())
+      }
+    }
+
+    __getFormateDateObj(y, m, d) {
+      return new Date(y, m, d)
+
+      // let datestr = y + '/' + m + '/' + d
+      // let datestr = 2018 + '/' + (3 + 1) + '/' + 1
+      // return new Date(datestr)
+    }
+
+    __exchangeMonth(key) {
+      let selectDateObj = this.selectDateObj
+      let y = selectDateObj.getFullYear()
+      let m = selectDateObj.getMonth()
+      let d = selectDateObj.getDate()
+
+      // let dateStr = ''
+      let goDateObj = null
+      if (key === 'left') {
+        let lastMon = m - 1
+        if (lastMon < 0) {
+          // dateStr = (y - 1) + '/' + 12 + '/' + d
+          goDateObj = this.__getFormateDateObj((y - 1), 11, d)
+        } else {
+          // dateStr = y + '/' + m + '/' + d
+          goDateObj = this.__getFormateDateObj(y, lastMon, d)
+        }
+      } else {
+        let nextMon = m + 1
+        if (nextMon > 11) {
+          // dateStr = (y + 1) + '/' + 1 + '/' + d
+          goDateObj = this.__getFormateDateObj((y + 1), 0, d)
+        } else {
+          // dateStr = y + '/' + next + '/' + d
+          goDateObj = this.__getFormateDateObj(y, nextMon, d)
+        }
+      }
+      // let goDateObj = new Date(dateStr)
+      this.selectDateObj = goDateObj
+      this.__todo(this.selectDateObj)
+    }
+
+    __getdays() {
+      let arr = []
+      for (let i = 1; i < 31; i++) {
+        let msg = []
+
+        if (i === 25) {
+          msg = ['fml生日', '春节']
+        }
+
+        let obj = {
+          newday: i,
+          oldday: '初'.concat(i.toString()),
+          customMsg: msg
+        }
+        arr.push(obj)
+      }
+      this.myMonDays.days = arr
+      this.myMonDays.rowNumber = [1, 2, 3, 4, 5]
+      this.myMonDays.columnNumber = this.weeks
+    }
+
+    __todo(dateObj) {
+      let y = dateObj.getFullYear()
+      let m = dateObj.getMonth() /* 因为月份是0开始 */
+      let d = dateObj.getDate() /* 获取今天是这个月的第几号从1开始 */
+
+
+      /* 返回该星期中的某一天 ，该值是 0（星期天） ~ 6（星期六） 中的一个值。 */
+      /* 星期几从0开始，注意别写成getUTCDate() */
+      // let nowWeekDayNum = dateObj.getUTCDay() + 1
+      let weekNumInWeek = dateObj.getDay()
+
+
+      /* 通过今天是第几号和星期几推算1号是星期几，有可能出现负数 */
+      let __weekNumOf1 = weekNumInWeek - (d % 7 - 1)
+      /* 把负数换为正数 */
+      let weekNumOf1 = __weekNumOf1 <= 0 ? __weekNumOf1 + 7 : __weekNumOf1
+
+      /* 在上面的代码中，我们初始化d为三月份的第0天，由于JavaScript中day的范围为1~31中的值，所以当设为0时，会向前 一天，也即表示上个月的最后一天 */
+      let dayNumInMon = new Date(y, (m + 1), 0).getDate() /* 获取上一个月有多少天 */
+
+      let nowMonDaysList = []
+      let t = 0
+      let numOfNull = weekNumOf1 - 1
+
+      for (let i = 0; i < (dayNumInMon + numOfNull); i++) {
+        if (i < numOfNull) {
+          nowMonDaysList[i] = ''
+        } else {
+          let n = t + 1
+          let obj = {
+            newday: n.toString(),
+            oldday: '初'.concat(n.toString()),
+            customMsg: []
+          }
+          nowMonDaysList.push(obj)
+          t = n
+        }
+      }
+
+      this.headerText = y + '年' + (m + 1) + '月' + d + '日'
+      this.myMonDays.days = nowMonDaysList
+      this.myMonDays.columnNumber = this.weeks
+      this.myMonDays.rowNumber = nowMonDaysList.length / this.myMonDays.columnNumber.length
+
+      /* 警示：不可以使用 this.selectDateObj == this.nowDateObj 比较日期 */
+      // if (this.selectDateObj > this.nowDateObj || this.selectDateObj < this.nowDateObj) {
+      //   console.log('选择的日期和当前不相等')
+      //   console.log('selectDateObj ' + this.selectDateObj)
+      //   console.log('nowDateObj ' + this.nowDateObj)
+      // } else {
+      //   console.log('选择的日期和当前相等')
+      // }
+    }
+  }
+</script>

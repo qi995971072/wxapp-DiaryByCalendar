@@ -1,0 +1,41 @@
+<style lang="less">
+  page{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+</style>
+
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/Calendar',
+      'pages/EditDiary'
+    ],
+    window: {
+      backgroundTextStyle: 'black',
+      navigationBarBackgroundColor: '#000',
+      navigationBarTitleText: '日历日记',
+      navigationBarTextStyle: 'white'
+    }
+  }
+
+  globalData = {
+    userInfo: null
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+  }
+
+  onLaunch() {
+    console.log('Wechat little program onLanch')
+  }
+}
+</script>

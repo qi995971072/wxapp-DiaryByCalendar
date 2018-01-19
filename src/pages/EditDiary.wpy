@@ -1,0 +1,136 @@
+<style>
+  .rootcontainer{
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bottom_drawer_bg{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.5;
+    z-index: 1000;
+  }
+  .bottom_drawer{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 300px;
+    background-color: green;
+    z-index: 2000;
+    opacity: 0;
+  }
+
+
+  .open_btn {
+    border-radius: 10px;
+    margin-top: 44px;
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 50px;
+    background-color: #20bb21;
+    color: #fff;
+    text-align: center;
+  }
+</style>
+
+/* 错误案例：wx:if="{{showModalStatus}}" 要一开始就有动画效果的组件 不能设置条件渲染 */
+<template>
+  <view class="rootcontainer">
+    <view class="bottom_drawer_bg" wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"></view>
+    <view class="bottom_drawer" wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest"></view>
+    <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
+  </view>
+</template>
+
+
+
+<script>
+  import wepy from 'wepy'
+
+  const  dur = 500;
+
+  export default  class EditDiary extends wepy.page {
+
+    data = {
+      showModalStatus:false,
+      animationData:null,
+      manimation:null,
+      viewBottom:null
+    }
+
+    methods = {
+
+      hideDrawer() {
+
+        console.log('隐藏bottom_drawer')
+
+        this.manimation.translateY(0).step()
+
+        // 导出动画数据到animationData
+        this.animationData = this.manimation.export()
+
+        setTimeout(function () {
+          console.log('隐藏bottom_drawer计时器到期')
+          this.setData({//不是本类调用的方法，将不能直接使用this.showModalStatus = false
+            showModalStatus: false
+          })
+        }.bind(this),dur)
+      },
+
+      showDrawer() {
+        console.log('显示bottom_drawer')
+
+        var query = wx.createSelectorQuery();//选择id
+        query.select('#mjltest').boundingClientRect()
+        query.exec(function (res) {
+
+          //res就是 所有标签为mjltest的元素的信息 的数组
+          console.log(res);
+
+          //取高度
+          console.log(res[0].height);
+
+
+          let height = res[0].height;
+
+          this.manimation.translateY((-height)).step()
+
+
+          this.setData({//不是本类调用的方法，将不能直接使用this.showModalStatus = false
+            showModalStatus: true,
+            // 导出动画数据到animationData
+            animationData: this.manimation.export()
+          })
+        }.bind(this))
+      },
+
+      doNothing() {
+        console.log('do nothing')
+      }
+    }
+
+    onLoad() {
+      console.log('EditDiary on load')
+
+      // 创建动画对象
+      this.manimation = wx.createAnimation({
+        duration: dur,
+        timingFunction: "linear",
+        delay: 0
+      })
+    }
+
+    onReady() {
+
+    }
+  }
+</script>

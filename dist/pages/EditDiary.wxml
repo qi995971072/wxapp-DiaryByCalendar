@@ -1,0 +1,6 @@
+
+  <view class="rootcontainer">
+    <view class="bottom_drawer_bg"  wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"/>
+    <view class="bottom_drawer"  wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest"/>
+    <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
+  </view>

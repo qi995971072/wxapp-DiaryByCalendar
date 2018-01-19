@@ -1,0 +1,69 @@
+
+  <view class="container">
+
+    <view class="line"/>
+
+    <view class="header">
+      <button bindtap="lastMonth" type="default">last</button>
+      <text class="headertext">{{headerText}}</text>
+      <button bindtap="nextMonth" type="default">next</button>
+    </view>
+
+    <view class="line"/>
+
+    <view class="calendar">
+      <view class="weekcontainer">
+        <block  wx:for="{{weeks}}" wx:key="*this">
+          <view class="weekitem">{{item}} </view>
+        </block>
+      </view>
+
+      <view>
+
+          <!--<view class="dayrowcontainer" wx:for="{{myMonDays.rowNumber}}" wx:key="*this" wx:for-index="rowindex">-->
+            <!--<view class="dayitem" wx:for="{{myMonDays.columnNumber}}" wx:key="*this" wx:for-index="itemindex">-->
+              <!--<view class="newday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday}}</view>-->
+              <!--<view class="oldday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].oldday}}</view>-->
+              <!--<view class="customday" wx:for="{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].customMsg}}">{{item}}</view>-->
+            <!--</view>-->
+          <!--</view>-->
+
+
+        <block  wx:for="{{myMonDays.rowNumber}}" wx:key="*this" wx:for-index="rowindex">
+          <view class="dayrowcontainer">
+
+            <block wx:for="{{myMonDays.columnNumber}}" wx:key="*this" wx:for-index="itemindex">
+
+              <block wx:if="{{ !((selectDateObj > nowDateObj) || (selectDateObj < nowDateObj)) && nowDayNumber == myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday }}">
+                <view class="dayitem-select">
+                  <view class="newday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday}}</view>
+                  <view class="oldday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].oldday}}</view>
+                  <block wx:for="{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].customMsg}}">
+                    <view class="customday">{{item}}</view>
+                  </block>
+                </view>
+              </block>
+
+              <block wx:else>
+                <view class="dayitem">
+                  <view class="newday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].newday}}</view>
+                  <view class="oldday">{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].oldday}}</view>
+                  <block wx:for="{{myMonDays.days[rowindex*myMonDays.columnNumber.length+itemindex].customMsg}}">
+                    <view class="customday">{{item}}</view>
+                  </block>
+                </view>
+              </block>
+
+            </block>
+
+          </view>
+        </block>
+      </view>
+    </view>
+
+
+    <view class="line"/>
+
+    <view class="dairycontainer" bindtap="clickToEditDiary"/>
+
+  </view>
