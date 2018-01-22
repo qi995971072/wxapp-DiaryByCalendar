@@ -1,200 +1,285 @@
 <style>
-  .rootcontainer{
-    background-color: red;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bottom_drawer_bg{
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #000;
-    opacity: 0.7;
-    z-index: 1000;
-  }
-  .bottom_drawer{
-    position: fixed;
-    /*height: 300px;*/
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transform: translateY(100%);
-    background-color: green;
-    z-index: 2000;
-    opacity: 1;
-
-    display: flex;
-    flex-direction: column;
-  }
-
-
-  .open_btn {
-    border-radius: 10px;
-    margin-top: 44px;
-    margin-left: 40px;
-    margin-right: 40px;
-    height: 50px;
-    background-color: #20bb21;
-    color: #fff;
-    text-align: center;
-  }
-
-  .bottom_drawer_container {
-    display: flex;
-    flex-direction: row;
-  }
-
-
-  .bottom_drawer_item {
-    box-sizing: border-box;
-    border: solid 1px red;
-    width: 50px;
-    height: 50px;
-  }
-
-  .btn_cancel {
-    width: 100%;
-    height: 50px;
-    background-color: beige;
-  }
-    .scroll_view {
+    .rootcontainer{
+        background-color: white;
         width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
     }
+
+    .bottom_drawer_bg{
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
+        opacity: 0.5;
+        z-index: 1000;
+    }
+    .bottom_drawer{
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        transform: translateY(100%);
+        background-color: green;
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .open_btn {
+        border-radius: 10px;
+        margin-top: 44px;
+        margin-left: 40px;
+        margin-right: 40px;
+        height: 50px;
+        background-color: #20bb21;
+        color: #fff;
+        text-align: center;
+    }
+
+    .bottom_drawer_container {
+        display: flex;
+        flex-direction: row;
+    }
+
+
+    .bottom_drawer_item {
+        box-sizing: border-box;
+        border: solid 1px red;
+        width: 50px;
+        height: 50px;
+    }
+
+    .scroll_view {
+        width: 100%;
+        height: 100%;
+        background-color: yellow;
+        /*height: 100%;*/
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        /*align-items: stretch;*/
+        padding-left: 10px;
+        padding-right: 10px;
+
+        box-sizing: border-box;
+    }
+
+    .item_textarea {
+
+        width: 100%;
+
+        min-height: 100px;
+        /*margin-left: 5%;*/
+        margin-top: 10px;
+        /*margin-right: 5%;*/
+
+        /*flex-grow: 0;*/
+        /*flex-shrink: 0;*/
+
+        border: solid 1px gray;
+        background-color: white;
+    }
+
+    .item_textarea_input{
+        background-color: lightgray;
+        width: 100%;
+        height: 100%;
+    }
+
+    .item_image {
+        /*margin-left: 1%;*/
+        /*margin-top: 10px;*/
+        /*margin-right: 1%;*/
+        margin-top: 10px;
+        width: 100%;
+        border: solid 1px gray;
+    }
+
+    .btn_cancel {
+        width: 100%;
+        height: 50px;
+        background-color: beige;
+    }
+
+    .placeholder_class {
+        color: lightgray;
+    }
+
+    .text_view {
+        width: 100%;
+        height: 300px;
+        background-color: green;
+        margin-top: 1px;
+    }
+
+    .bottom_drawer_show {
+        display: block;
+    }
+
+    .bottom_drawer_hide {
+        display: none;
+    }
 </style>
 
-/* 错误案例：wx:if="{{showModalStatus}}" 要一开始就有动画效果的组件 不能设置条件渲染 */
+
 <template>
-  <view class="rootcontainer" scroll-y="{{true}}">
+    <view>
+        <block wx:for="{{inputViewArr}}" for-index>
+            <block wx:if="{{item == 0}}">
+                <view class="item_textarea">
+                    <textarea placeholder="请填写内容" placeholder-class="placeholder_class" maxlength="{{-1}}" auto-height="{{true}}"></textarea>
+                </view>
+            </block>
 
-      <scroll-view scroll-y="{{true}}" class="scroll_view">
-          <block wx:for="{{inputViewArr}}">
-              <block wx:if="{{item == 0}}">
-                  <textarea style="background-color: black; color: white; width: 100%; height: 200px"></textarea>
-              </block>
+            <block wx:elif="{{item == 1}}">
+                <image src="./1.jpeg" class="item_image" mode="{{'widthFix'}}"></image>
+            </block>
 
-              <block wx:elif="{{item == 1}}">
-                  <image src="./1.jpg"></image>
-              </block>
-          </block>
-
-          <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
-
-      </scroll-view>
-
-    <view class="bottom_drawer_bg" wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"></view>
-    <view class="bottom_drawer" wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest">
-      <view class="bottom_drawer_container">
-        <block wx:for="{{['文字','图片']}}">
-          <view class="bottom_drawer_item" bindtap="itemClick" data-index="{{index}}">{{item}}</view>
+            <block wx:elif="{{2}}">
+                <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
+            </block>
         </block>
-      </view>
-      <view class="btn_cancel" bindtap="hideDrawer">取消</view>
     </view>
 
-  </view>
+
+
+    <view class="{{showModalStatus ? 'bottom_drawer_show' : 'bottom_drawer_hide'}}">
+        <view class="bottom_drawer_bg" wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"></view>
+        <view class="bottom_drawer" wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest">
+            <view class="bottom_drawer_container">
+                <block wx:for="{{['文字','图片']}}">
+                    <view class="bottom_drawer_item" bindtap="itemClick" data-index="{{index}}">{{item}}</view>
+                </block>
+            </view>
+            <view class="btn_cancel" bindtap="hideDrawer">取消</view>
+        </view>
+    </view>
 </template>
-
-
 
 <script>
   import wepy from 'wepy'
 
-  const  dur = 200;
+  const  dur = 500;
 
-  export default  class EditDiary extends wepy.page {
+  export default class EditDiary extends wepy.page {
 
     data = {
-      showModalStatus:false,
-      animationData:null,
-      manimation:null,
-      viewBottom:null,
-        inputViewArr:[]
+        showModalStatus: false,
+        animationData: null,
+        inputViewArr: [0, 1, 0, 0, 2]
     }
 
     methods = {
+        hideDrawer() {
 
-      hideDrawer() {
-
-        console.log('隐藏bottom_drawer')
-
-          var query = wx.createSelectorQuery();//选择id
-          query.select('#mjltest').boundingClientRect()
-          query.exec(function (res) {
-
-            //res就是 所有标签为mjltest的元素的信息 的数组
-            console.log(res);
-
-            //取高度
-            console.log(res[0].height);
+            let t = this
 
 
-            let height = res[0].height;
+            console.log('隐藏bottom_drawer')
+            var query = wx.createSelectorQuery();//选择id
+            query.select('#mjltest').boundingClientRect()
+            query.exec(function (res) {
 
-            this.manimation.translateY((height)).step()
+                //res就是 所有标签为mjltest的元素的信息 的数组
+                //console.log(res);
+
+                //取高度
+                //console.log(res[0].height);
 
 
-            this.setData({//不是本类调用的方法，将不能直接使用this.showModalStatus = false
-              showModalStatus: true,
-              // 导出动画数据到animationData
-              animationData: this.manimation.export()
+                let height = res[0].height;
+
+                let animation = wx.createAnimation({
+                    duration: dur,
+                    timingFunction: "linear",
+                    delay: 0
+                })
+
+                animation.translateY((height)).step()
+
+                t.animationData= animation.export()
+                t.$apply()
+
+
+                setTimeout(function () {
+
+                    // t.setData({
+                    //     showModalStatus: false,
+                    //     animationData: null
+                    // })
+
+
+                    t.showModalStatus= false
+                    t.animationData= null
+                    t.$apply()
+
+                    console.log('隐藏bottom_drawer计时器到期=> ' + t.showModalStatus)
+                },dur)
+
             })
 
-              setTimeout(function () {
-                  console.log('隐藏bottom_drawer计时器到期')
-                  this.setData({//不是本类调用的方法，将不能直接使用this.showModalStatus = false
-                      showModalStatus: false
-                  })
-              }.bind(this),dur)
+        },
 
-          }.bind(this))
-      },
+        showDrawer: function () {
+            console.log('显示bottom_drawer')
 
-      showDrawer() {
-          console.log('显示bottom_drawer')
-          this.manimation.translateY((0)).step()
-          this.showModalStatus = true
-          this.animationData = this.manimation.export()
-      },
+            this.showModalStatus= true
+            // this.setData({
+            //     showModalStatus: true
+            // })
 
-      doNothing() {
-        console.log('do nothing')
-      },
+            setTimeout(function(){
+
+                let animation = wx.createAnimation({
+                    duration: dur,
+                    timingFunction: "linear",
+                    delay: 0
+                })
+
+                animation.translateY(0).step()
+                // this.setData({
+                //     showModalStatus: true,
+                //     animationData: animation.export()
+                // })
+
+                this.showModalStatus= true
+                this.animationData= animation.export()
+                this.$apply()
+
+            }.bind(this),30)
+        },
+
+        doNothing() {
+            console.log('do nothing')
+        },
 
         itemClick(e) {
 
-          console.log('点击的下标==> ' + e.currentTarget.dataset.index)
+            console.log('点击的下标==> ' + e.currentTarget.dataset.index)
             let index = e.currentTarget.dataset.index
             if (index == 0) {
-              console.log('点击了文字')
-                this.inputViewArr.push(0);
+                console.log('点击了文字')
+                let arr = this.data.inputViewArr
+                arr.splice(arr.length-1,0,0)
+                // this.setData({
+                //     inputViewArr: arr
+                // })
+                this.inputViewArr = arr
             } else if (index == 1) {
-              console.log('点击了图片')
-                this.inputViewArr.push(1)
+                console.log('点击了图片')
+                let arr = this.data.inputViewArr
+                arr.splice(arr.length - 1, 0, 1)
+                // this.setData({
+                //     inputViewArr: arr
+                // })
+                this.inputViewArr = arr
             }
-        }
-    }
-
-    onLoad() {
-      console.log('EditDiary on load')
-
-      // 创建动画对象
-      this.manimation = wx.createAnimation({
-        duration: dur,
-        timingFunction: "linear",
-        delay: 0
-      })
-    }
-
-    onReady() {
-
+        },
     }
   }
 </script>

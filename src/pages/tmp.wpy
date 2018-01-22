@@ -1,0 +1,22 @@
+<view class="rootcontainer" scroll-y="{{true}}">
+
+    <view scroll-y="{{true}}" class="scroll_view">
+        <block wx:for="{{inputViewArr}}">
+            <block wx:if="{{item == 0}}">
+                <view class="item_textarea">
+                    <textarea placeholder="请填写内容" placeholder-class="placeholder_class" maxlength="{{-1}}" auto-height="{{true}}"></textarea>
+                </view>
+            </block>
+
+            <block wx:elif="{{item == 1}}">
+                <image src="./1.jpeg" class="item_image" mode="{{'widthFix'}}"></image>
+            </block>
+        </block>
+
+        <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
+
+    </view>
+
+
+
+</view>

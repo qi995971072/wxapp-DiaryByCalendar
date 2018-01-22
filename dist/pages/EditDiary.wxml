@@ -1,29 +1,32 @@
 
-  <view class="rootcontainer" scroll-y="{{true}}">
+    <view>
+        <block  wx:for="{{inputViewArr}}" for-index="for-index">
+            <block wx:if="{{item == 0}}">
+                <view class="item_textarea">
+                    <textarea placeholder="请填写内容" placeholder-class="placeholder_class" maxlength="{{-1}}" auto-height="{{true}}"/>
+                </view>
+            </block>
 
-      <scroll-view scroll-y="{{true}}" class="scroll_view">
-          <block  wx:for="{{inputViewArr}}">
-              <block wx:if="{{item == 0}}">
-                  <textarea style="background-color: black; color: white; width: 100%; height: 200px"/>
-              </block>
+            <block wx:elif="{{item == 1}}">
+                <image src="./1.jpeg" class="item_image" mode="{{'widthFix'}}"/>
+            </block>
 
-              <block wx:elif="{{item == 1}}">
-                  <image src="./1.jpg"/>
-              </block>
-          </block>
-
-          <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
-
-      </scroll-view>
-
-    <view class="bottom_drawer_bg"  wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"/>
-    <view class="bottom_drawer" wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest">
-      <view class="bottom_drawer_container">
-        <block wx:for="{{['文字','图片']}}">
-          <view class="bottom_drawer_item" bindtap="itemClick" data-index="{{index}}">{{item}}</view>
+            <block wx:elif="{{2}}">
+                <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
+            </block>
         </block>
-      </view>
-      <view class="btn_cancel" bindtap="hideDrawer">取消</view>
     </view>
 
-  </view>
+
+
+    <view class="{{showModalStatus ? 'bottom_drawer_show' : 'bottom_drawer_hide'}}">
+        <view class="bottom_drawer_bg"  wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"/>
+        <view class="bottom_drawer"  wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest">
+            <view class="bottom_drawer_container">
+                <block wx:for="{{['文字','图片']}}">
+                    <view class="bottom_drawer_item" bindtap="itemClick" data-index="{{index}}">{{item}}</view>
+                </block>
+            </view>
+            <view class="btn_cancel" bindtap="hideDrawer">取消</view>
+        </view>
+    </view>
