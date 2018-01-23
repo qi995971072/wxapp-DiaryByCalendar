@@ -1,30 +1,39 @@
 
     <view>
-        <block  wx:for="{{inputViewArr}}" for-index="for-index">
-            <block wx:if="{{item == 0}}">
+        <block  wx:for="{{inputViewArr}}" wx:for-index="index" wx:key="*this">
+
+            <block wx:if="{{item.type == 'text'}}">
                 <view class="item_textarea">
-                    <textarea placeholder="请填写内容" placeholder-class="placeholder_class" maxlength="{{-1}}" auto-height="{{true}}"/>
+                    <textarea class="item_textarea_input" placeholder="请填写内容" placeholder-class="_placeholder_class" maxlength="{{-1}}" auto-height="{{true}}" bindconfirm="textareaDone" data-index="{{index}}" value="{{item.content}}"/>
+                    <view class="item_tool">
+                        <view class="item_tool_btn" bindtap="clickDelete" data-wpyclickdelete-a="{{index}}">删除</view>
+                        <view class="item_tool_btn" bindtap="clickInsert" data-wpyclickinsert-a="{{index}}">插入</view>
+                    </view>
                 </view>
             </block>
 
-            <block wx:elif="{{item == 1}}">
-                <image src="./1.jpeg" class="item_image" mode="{{'widthFix'}}"/>
+            <block wx:elif="{{item.type == 'image'}}">
+                <view class="item_imagearea">
+                    <image src="{{item.content}}" class="item_image" mode="{{'widthFix'}}"/>
+                    <view class="item_tool_1">
+                        <view class="item_tool_btn" bindtap="clickDelete" data-wpyclickdelete-a="{{index}}">删除</view>
+                        <view class="item_tool_btn" bindtap="clickInsert" data-wpyclickinsert-a="{{index}}">插入</view>
+                    </view>
+                </view>
             </block>
 
-            <block wx:elif="{{2}}">
-                <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
+            <block wx:elif="{{item.type == 'add'}}">
+                <view class="open_btn" bindtap="showDrawer">打开抽屉层</view>
             </block>
         </block>
     </view>
 
-
-
     <view class="{{showModalStatus ? 'bottom_drawer_show' : 'bottom_drawer_hide'}}">
-        <view class="bottom_drawer_bg"  wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"/>
+        <view class="bottom_drawer_bg"  wx:if="{{showModalStatus}}" catchtap="hideDrawer"/>
         <view class="bottom_drawer"  wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest">
             <view class="bottom_drawer_container">
-                <block wx:for="{{['文字','图片']}}">
-                    <view class="bottom_drawer_item" bindtap="itemClick" data-index="{{index}}">{{item}}</view>
+                <block wx:for="{{['文字','图片']}}" wx:key="*this">
+                    <view class="bottom_drawer_item" bindtap="itemClick" data-type="{{index}}">{{item}}</view>
                 </block>
             </view>
             <view class="btn_cancel" bindtap="hideDrawer">取消</view>

@@ -1,79 +1,154 @@
 <style>
-    .rootcontainer{
-        background-color: white;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
+.rootcontainer {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
-    .bottom_drawer_bg{
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background-color: #000;
-        opacity: 0.5;
-        z-index: 1000;
-    }
-    .bottom_drawer{
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        transform: translateY(100%);
+.bottom_drawer_bg {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.5;
+    z-index: 1000;
+    position: fixed;
+}
+.bottom_drawer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+    background-color: green;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.open_btn {
+    border-radius: 10px;
+    margin-top: 44px;
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 50px;
+    background-color: #20bb21;
+    color: #fff;
+    text-align: center;
+}
+
+.bottom_drawer_container {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.bottom_drawer_item {
+    box-sizing: border-box;
+    border: solid 1px red;
+    width: 50px;
+    height: 50px;
+}
+
+.scroll_view {
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+}
+
+.item_textarea {
+
+    width: 100%;
+
+    /*margin-left: 5%;*/
+    margin-top: 10px;
+    /*margin-right: 5%;*/
+
+    /*flex-grow: 0;*/
+    /*flex-shrink: 0;*/
+
+    border: solid 1px gray;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.item_textarea_input{
+    background-color: lightgray;
+    width: 100%;
+    min-height: 100px;
+}
+
+
+
+.btn_cancel {
+    width: 100%;
+    height: 50px;
+    background-color: beige;
+}
+
+._placeholder_class {
+    color: black;
+}
+
+.text_view {
+    width: 100%;
+    height: 300px;
+    background-color: green;
+    margin-top: 1px;
+}
+
+.bottom_drawer_show {
+    display: block;
+}
+
+.bottom_drawer_hide {
+    display: none;
+}
+
+.item_tool {
+    width: 100%;
+    height: 44px;
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*right: 0;*/
+}
+
+.item_tool_1 {
+    width: 100%;
+    height: 44px;
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position: absolute;
+    bottom: 0;
+}
+    .item_tool_btn {
+        height: 100%;
         background-color: green;
-        z-index: 2000;
-        display: flex;
-        flex-direction: column;
-    }
-
-
-    .open_btn {
-        border-radius: 10px;
-        margin-top: 44px;
-        margin-left: 40px;
-        margin-right: 40px;
-        height: 50px;
-        background-color: #20bb21;
-        color: #fff;
-        text-align: center;
-    }
-
-    .bottom_drawer_container {
-        display: flex;
-        flex-direction: row;
-    }
-
-
-    .bottom_drawer_item {
-        box-sizing: border-box;
         border: solid 1px red;
-        width: 50px;
-        height: 50px;
     }
 
-    .scroll_view {
-        width: 100%;
-        height: 100%;
-        background-color: yellow;
-        /*height: 100%;*/
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        /*align-items: stretch;*/
-        padding-left: 10px;
-        padding-right: 10px;
-
-        box-sizing: border-box;
-    }
-
-    .item_textarea {
-
+    .item_imagearea {
         width: 100%;
 
-        min-height: 100px;
         /*margin-left: 5%;*/
         margin-top: 10px;
         /*margin-right: 5%;*/
@@ -83,77 +158,58 @@
 
         border: solid 1px gray;
         background-color: white;
+
+        display: flex;
+        flex-direction: column;
+
+        position: relative;
     }
 
-    .item_textarea_input{
-        background-color: lightgray;
-        width: 100%;
-        height: 100%;
-    }
-
-    .item_image {
-        /*margin-left: 1%;*/
-        /*margin-top: 10px;*/
-        /*margin-right: 1%;*/
-        margin-top: 10px;
-        width: 100%;
-        border: solid 1px gray;
-    }
-
-    .btn_cancel {
-        width: 100%;
-        height: 50px;
-        background-color: beige;
-    }
-
-    .placeholder_class {
-        color: lightgray;
-    }
-
-    .text_view {
-        width: 100%;
-        height: 300px;
-        background-color: green;
-        margin-top: 1px;
-    }
-
-    .bottom_drawer_show {
-        display: block;
-    }
-
-    .bottom_drawer_hide {
-        display: none;
-    }
+.item_image {
+    /*margin-left: 1%;*/
+    /*margin-top: 10px;*/
+    /*margin-right: 1%;*/
+    width: 100%;
+}
 </style>
 
 
 <template>
     <view>
-        <block wx:for="{{inputViewArr}}" for-index>
-            <block wx:if="{{item == 0}}">
+        <block wx:for="{{inputViewArr}}" wx:for-index="index" wx:key="*this">
+
+            <block wx:if="{{item.type == 'text'}}">
                 <view class="item_textarea">
-                    <textarea placeholder="请填写内容" placeholder-class="placeholder_class" maxlength="{{-1}}" auto-height="{{true}}"></textarea>
+                    <textarea class="item_textarea_input" placeholder="请填写内容" placeholder-class="_placeholder_class" maxlength="{{-1}}" auto-height="{{true}}" bindconfirm="textareaDone" data-index="{{index}}" value="{{item.content}}"></textarea>
+                    <view class="item_tool">
+                        <view class="item_tool_btn" bindtap="clickDelete({{index}})">删除</view>
+                        <view class="item_tool_btn" bindtap="clickInsert({{index}})">插入</view>
+                    </view>
                 </view>
             </block>
 
-            <block wx:elif="{{item == 1}}">
-                <image src="./1.jpeg" class="item_image" mode="{{'widthFix'}}"></image>
+            <block wx:elif="{{item.type == 'image'}}">
+                <view class="item_imagearea">
+                    <image src="{{item.content}}" class="item_image" mode="{{'widthFix'}}"></image>
+                    <view class="item_tool_1">
+                        <view class="item_tool_btn" bindtap="clickDelete({{index}})">删除</view>
+                        <view class="item_tool_btn" bindtap="clickInsert({{index}})">插入</view>
+                    </view>
+                </view>
             </block>
 
-            <block wx:elif="{{2}}">
-                <view class="open_btn" bindtap="showDrawer" data-status="1">打开抽屉层</view>
+            <block wx:elif="{{item.type == 'add'}}">
+                <view class="open_btn" bindtap="showDrawer">打开抽屉层</view>
             </block>
         </block>
     </view>
 
-
-
     <view class="{{showModalStatus ? 'bottom_drawer_show' : 'bottom_drawer_hide'}}">
-        <view class="bottom_drawer_bg" wx:if="{{showModalStatus}}" bindtap="hideDrawer" data-status="0"></view>
+        <view class="bottom_drawer_bg" wx:if="{{showModalStatus}}" catchtap="hideDrawer"></view>
         <view class="bottom_drawer" wx:if="{{true}}" catchtap="doNothing" animation="{{animationData}}" id="mjltest">
             <view class="bottom_drawer_container">
-                <block wx:for="{{['文字','图片']}}">
-                    <view class="bottom_drawer_item" bindtap="itemClick" data-index="{{index}}">{{item}}</view>
+                <block wx:for="{{['文字','图片']}}" wx:key="*this">
+                    <view class="bottom_drawer_item" bindtap="itemClick" data-type="{{index}}">{{item}}</view>
                 </block>
             </view>
             <view class="btn_cancel" bindtap="hideDrawer">取消</view>
@@ -164,122 +220,151 @@
 <script>
   import wepy from 'wepy'
 
-  const  dur = 500;
+  const  dur = 200;
 
   export default class EditDiary extends wepy.page {
 
     data = {
         showModalStatus: false,
         animationData: null,
-        inputViewArr: [0, 1, 0, 0, 2]
+        inputViewArr: [
+            {type:'text', content:null},
+            {type:'add', content:null}
+        ],
+        insertIndex: Number
     }
 
+      onUnload() {
+          console.log('页面被卸载')
+          let arr = getCurrentPages()
+          console.log(arr)
+          arr[0].setSelectDateDiary(this.inputViewArr)
+      }
+
     methods = {
-        hideDrawer() {
-
-            let t = this
-
-
-            console.log('隐藏bottom_drawer')
-            var query = wx.createSelectorQuery();//选择id
-            query.select('#mjltest').boundingClientRect()
-            query.exec(function (res) {
-
-                //res就是 所有标签为mjltest的元素的信息 的数组
-                //console.log(res);
-
-                //取高度
-                //console.log(res[0].height);
-
-
-                let height = res[0].height;
-
-                let animation = wx.createAnimation({
-                    duration: dur,
-                    timingFunction: "linear",
-                    delay: 0
-                })
-
-                animation.translateY((height)).step()
-
-                t.animationData= animation.export()
-                t.$apply()
-
-
-                setTimeout(function () {
-
-                    // t.setData({
-                    //     showModalStatus: false,
-                    //     animationData: null
-                    // })
-
-
-                    t.showModalStatus= false
-                    t.animationData= null
-                    t.$apply()
-
-                    console.log('隐藏bottom_drawer计时器到期=> ' + t.showModalStatus)
-                },dur)
-
-            })
-
-        },
 
         showDrawer: function () {
-            console.log('显示bottom_drawer')
-
-            this.showModalStatus= true
-            // this.setData({
-            //     showModalStatus: true
-            // })
-
-            setTimeout(function(){
-
-                let animation = wx.createAnimation({
-                    duration: dur,
-                    timingFunction: "linear",
-                    delay: 0
-                })
-
-                animation.translateY(0).step()
-                // this.setData({
-                //     showModalStatus: true,
-                //     animationData: animation.export()
-                // })
-
-                this.showModalStatus= true
-                this.animationData= animation.export()
-                this.$apply()
-
-            }.bind(this),30)
+            this.insertIndex = this.inputViewArr.length - 1
+            this.__showDrawer()
         },
+
+
+        hideDrawer() {
+            this.__hideDrawer()
+        },
+
+
 
         doNothing() {
             console.log('do nothing')
         },
 
         itemClick(e) {
-
-            console.log('点击的下标==> ' + e.currentTarget.dataset.index)
-            let index = e.currentTarget.dataset.index
-            if (index == 0) {
-                console.log('点击了文字')
-                let arr = this.data.inputViewArr
-                arr.splice(arr.length-1,0,0)
-                // this.setData({
-                //     inputViewArr: arr
-                // })
-                this.inputViewArr = arr
-            } else if (index == 1) {
-                console.log('点击了图片')
-                let arr = this.data.inputViewArr
-                arr.splice(arr.length - 1, 0, 1)
-                // this.setData({
-                //     inputViewArr: arr
-                // })
-                this.inputViewArr = arr
-            }
+            console.log('点击的类型==> ' + e.currentTarget.dataset.type)
+            let type = e.currentTarget.dataset.type
+            this.__insertObjToInputVierArr(this.insertIndex, type)
         },
+
+        clickInsert(index) {
+            console.log('插入==> ' + index)
+            this.insertIndex = index + 1
+            this.__showDrawer()
+        },
+
+        clickDelete(index) {
+            console.log('删除==> ' + index)
+            this.__deleteObjFromInputViewArr(index)
+        },
+
+        textareaDone(e) {
+            console.log(e)
+            console.log('输入的文字=> ' + e.detail.value + '下标==> ' + e.currentTarget.dataset.index)
+            this.inputViewArr[e.currentTarget.dataset.index].content = e.detail.value
+            console.log(this.inputViewArr)
+        }
+    }
+
+    __insertObjToInputVierArr(index, type) {
+        if (type == 0) {
+            let obj = {
+                type: 'text',
+                content: null
+            }
+            this.inputViewArr.splice(index, 0, obj)
+        } else if (type == 1) {
+
+            let that = this
+            wx.chooseImage({
+                count: 1, // 默认9
+                sizeType: ['original'], // 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
+                success: function (res) {
+                    // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+                    let tempFilePaths = res.tempFilePaths
+                    // console.log(tempFilePaths)
+                    let obj = {
+                        type: 'image',
+                        content: tempFilePaths[0]
+                    }
+                    that.inputViewArr.splice(index, 0, obj)
+                    that.$apply()
+                }
+            })
+        }
+
+        this.__hideDrawer()
+    }
+
+    __deleteObjFromInputViewArr(index) {
+        this.inputViewArr.splice(index,1);
+    }
+
+    __showDrawer() {
+        console.log('显示bottom_drawer')
+
+        this.showModalStatus= true
+        setTimeout(function(){
+
+            let animation = wx.createAnimation({
+                duration: dur,
+                timingFunction: "linear",
+                delay: 0
+            })
+
+            animation.translateY(0).step()
+            this.showModalStatus= true
+            this.animationData= animation.export()
+            this.$apply()
+
+        }.bind(this),30)
+    }
+
+    __hideDrawer() {
+        let t = this
+        console.log('隐藏bottom_drawer')
+        var query = wx.createSelectorQuery();
+        query.select('#mjltest').boundingClientRect()
+        query.exec(function (res) {
+            let height = res[0].height;
+            let animation = wx.createAnimation({
+                duration: dur,
+                timingFunction: "linear",
+                delay: 0
+            })
+
+            animation.translateY((height)).step()
+
+            t.animationData= animation.export()
+            t.$apply()
+
+            setTimeout(function () {
+                t.showModalStatus= false
+                t.animationData= null
+                t.$apply()
+
+                console.log('隐藏bottom_drawer计时器到期=> ' + t.showModalStatus)
+            },dur)
+        })
     }
   }
 </script>

@@ -64,6 +64,24 @@
 
     <view class="line"/>
 
-    <view class="dairycontainer" bindtap="clickToEditDiary"/>
+    <view class="dairycontainer" bindtap="clickToEditDiary">
+
+      <block wx:for="{{DairyDataArr}}" wx:for-index="index" wx:key="*this">
+
+        <block wx:if="{{item.type == 'text'}}">
+          <view class="diary_item">
+            <text>{{item.content}}</text>
+          </view>
+        </block>
+
+        <block wx:elif="{{item.type == 'image'}}">
+          <view class="diary_item">
+            <image src="{{item.content}}" mode="{{'widthFix'}}"/>
+          </view>
+        </block>
+
+      </block>
+
+    </view>
 
   </view>

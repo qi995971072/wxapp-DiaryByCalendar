@@ -22,11 +22,11 @@ export default class extends wepy.app {
       navigationBarBackgroundColor: '#000',
       navigationBarTitleText: '日历日记',
       navigationBarTextStyle: 'white',
-
     }
   }
 
   globalData = {
+      editDiary:null,
     userInfo: null
   }
 
@@ -37,6 +37,17 @@ export default class extends wepy.app {
 
   onLaunch() {
     console.log('Wechat little program onLanch')
+  }
+
+  setEditDiary(key, obj) {
+      console.log('setEditDiary')
+
+      wx.getStorage({
+          key: 'key',
+          success: function(res) {
+              console.log(res.data)
+          }
+      })
   }
 }
 </script>
